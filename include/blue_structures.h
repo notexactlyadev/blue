@@ -6,7 +6,8 @@ namespace blue::structures {
 /* The memory size for the emulated machine */
 constexpr unsigned memory_sz = 4096;
 
-enum opcodes : uint16_t {
+/* OPCODES */
+enum opcodes : uint8_t {
   HLT = 0b0000,
   ADD = 0b0001,
   XOR = 0b0010,
