@@ -50,7 +50,7 @@ int main() {
 
 	for (size_t i = 0; i < memory_sz; ++i) {
 	printf("memory position %o: ", i);
-	blue::util::print_bits(blue_hw.at(i)._int);
+		blue::util::print_bits(blue_hw.at(i)._int);
 	}
 
 	getchar();

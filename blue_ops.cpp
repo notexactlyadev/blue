@@ -28,7 +28,7 @@ void machine::write2memaddr(r_blue16_t data, size_t index) {
 }
 
 void machine::interpret_data(uint16_t &data, size_t index) {
-	std::memcpy(&this->memory_array.at(index)._register, &data, sizeof(r_blue16_t));
+	std::memcpy(&this->memory_array.at(index), &data, sizeof(r_blue16_t));
 }
 
 void machine::deposit() { this->acc = this->switch_register; }
@@ -53,7 +53,7 @@ blue12_t (12 bits).
 */
 template <typename T>
 void ops::write2register(uint16_t data, T &operand) {
-	std::memcpy(&operand._register, &data, sizeof(decltype(operand._register)));
+	std::memcpy(&operand, &data, sizeof(decltype(operand)));
 }
 
 /* sys_reset():
