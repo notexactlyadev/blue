@@ -3,6 +3,7 @@
 #include "include/blue_util.h"
 #include "include/blue_state.h"
 #include <cstdint>
+#include <cstring>
 #include <iostream>
 
 namespace blue {
@@ -27,7 +28,7 @@ void machine::write2memaddr(r_blue16_t data, size_t index) {
 }
 
 void machine::interpret_data(uint16_t &data, size_t index) {
-	this->memory_array.at(index)._register = *reinterpret_cast<r_blue16_t*>(&data);
+	std::memcpy(&this->memory_array.at(index)._register, &data, sizeof(r_blue16_t));
 }
 
 void machine::deposit() { this->acc = this->switch_register; }
@@ -52,7 +53,7 @@ blue12_t (12 bits).
 */
 template <typename T>
 void ops::write2register(uint16_t data, T &operand) {
-	operand._register = *reinterpret_cast<decltype(operand._register)*>(&data);
+	std::memcpy(&operand._register, &data, sizeof(decltype(operand._register)));
 }
 
 /* sys_reset():
@@ -76,7 +77,9 @@ void machine::sys_reset() {
 }
 /* reinterpretar datos de tipo int -> r_blue16_t */
 structures::r_blue16_t ops::to_rb16t(int data) {
-	return *reinterpret_cast<structures::r_blue16_t *>(&data);
+	structures::r_blue16_t temp;
+	std::memcpy(&temp, &data, sizeof(structures::r_blue16_t));
+	return temp;
 }
 
 void state::sequencer_t::togglestate() {
@@ -90,7 +93,7 @@ void machine::CSA() { this->acc = this->switch_register;}
 
 void machine::NOT() {
 	uint16_t result = ~this->acc._int;
-	this->acc = *reinterpret_cast<blue16_t*>(&result);
+	std::memcpy(&this->acc, &result, sizeof(blue16_t));
 }
 
 void machine::SRJ(uint16_t memaddr) {
