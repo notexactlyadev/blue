@@ -7,14 +7,14 @@
 #include <iostream>
 
 namespace blue {
-blue16_t& machine::at(size_t index) { return this->memory_array.at(index); }
+blue16_t& machine::at(size_t index) { return memory_array.at(index); }
 
 uint16_t machine::get_opcode(size_t index) {
-	return this->memory_array.at(index)._register.op_code;
+	return memory_array.at(index)._register.op_code;
 }
 
 uint16_t machine::get_memaddr(size_t index) {
-	return this->memory_array.at(index)._register.mem_addr;
+	return memory_array.at(index)._register.mem_addr;
 }
 
 void machine::reset_memory() {
@@ -24,14 +24,14 @@ void machine::reset_memory() {
 }
 
 void machine::write2memaddr(r_blue16_t data, size_t index) {
-	this->memory_array.at(index)._register = data;
+	memory_array.at(index)._register = data;
 }
 
 void machine::interpret_data(uint16_t &data, size_t index) {
-	std::memcpy(&this->memory_array.at(index), &data, sizeof(r_blue16_t));
+	std::memcpy(&memory_array.at(index), &data, sizeof(r_blue16_t));
 }
 
-void machine::deposit() { this->acc = this->switch_register; }
+void machine::deposit() { acc = switch_register; }
 
 
 /*
@@ -83,27 +83,27 @@ structures::r_blue16_t ops::to_rb16t(int data) {
 }
 
 void state::sequencer_t::togglestate() {
-	this->working = !this->stopped;
-	this->stopped = !this->working;
+	working = !stopped;
+	stopped = !working;
 }
 
-void machine::LDA(size_t mem_dir) { this->at(mem_dir) = this->acc; }
-void machine::STA(size_t mem_dir) { this->acc = this->at(mem_dir); }
-void machine::CSA() { this->acc = this->switch_register;}
+void machine::LDA(size_t mem_dir) { at(mem_dir) = acc; }
+void machine::STA(size_t mem_dir) { acc = at(mem_dir); }
+void machine::CSA() { acc = switch_register;}
 
 void machine::NOT() {
-	uint16_t result = ~this->acc._int;
-	std::memcpy(&this->acc, &result, sizeof(blue16_t));
+	uint16_t result = ~acc._int;
+	std::memcpy(&acc, &result, sizeof(blue16_t));
 }
 
 void machine::SRJ(uint16_t memaddr) {
-	this->acc._register.mem_addr = program_counter._register.mem_addr;
-	this->acc._register.op_code = 0;
+	acc._register.mem_addr = program_counter._register.mem_addr;
+	acc._register.op_code = 0;
 	ops::write2register(memaddr, program_counter);
 }
 
 void machine::JMA(uint16_t memaddr) {
-	if (this->acc._int < 0) {
+	if (acc._int < 0) {
 		ops::write2register(memaddr, program_counter);
 	} else {
 		return;
