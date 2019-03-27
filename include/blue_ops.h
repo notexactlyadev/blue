@@ -10,6 +10,6 @@ namespace blue::ops {
 template <typename T>
 void write2register(uint16_t data, T &operand);
 
-structures::r_blue16_t to_rb16t(int data);
+// structures::r_blue16_t to_rb16t(int data);
 
 } // namespace blue::ops
