@@ -9,6 +9,11 @@ alu_t::alu_t() {
 	alu_reset();
 }
 
+alu_t::~alu_t() {
+	delete z;
+	delete y;
+}
+
 void alu_t::exec_cycle() {
 	z->raw_register = acc->raw_register;
 	y->raw_register = mbr->raw_register;

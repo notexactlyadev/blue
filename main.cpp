@@ -3,6 +3,7 @@
 #include "include/blue_util.h"
 #include "include/blue_interpreter.h"
 #include <iostream>
+#include <iomanip>
 
 
 int main() {
@@ -17,23 +18,32 @@ int main() {
 	write2memaddr({0003, HLT}, 2U);
 	write2memaddr({0002, ADD}, 3U);
 	write2memaddr({0010, STA}, 4U);
+	write2memaddr({0011, RAL}, 5U);
+	write2memaddr({0000, SRJ}, 6U);
+	write2memaddr({0000, JMP}, 10U);
 	//write2register(packet2, blue_hw.switch_register);
 
 	//blue_hw.deposit();
 	//blue_hw.interpret_data(packet1, 1);
 
-	sys_interpreter(constraint);
+	while(true) {
+		system("cls");
+		if(getchar() == 'q') {
+			break;
+		}
+		sys_interpreter(constraint);
 
-	std::cout << "\n";
-	for (size_t i = 0; i < constraint; ++i) {
-		printf("memory position %o: ", static_cast<unsigned int>(i));
+		std::cout << "\n";
+		for (size_t i = 0; i < constraint; ++i) {
+			std::cout << "Memory Position [" << std::setw(4) << std::oct << i << "]: ";
 			print_bits(at(i).u16);
+		}
+		std::cout << std::dec << std::setfill(' ');
+
+		std::cout << "Blue Accumulator    " << std::setw(4) << " : ";
+		print_bits(acc->i16);
+
 	}
-
-	printf("accumulator: %d -> ", acc->i16);
-	print_bits(acc->i16);
-
-	getchar();
 
 	return 0;
 }

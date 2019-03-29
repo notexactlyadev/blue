@@ -13,7 +13,7 @@ blue16_t* program_counter;
 blue16_t* acc;
 blue16_t* switch_register;
 sequencer_t* sequencer;
-alu_t* alu;
+std::unique_ptr<alu_t> alu;
 
 void Init() {
 	acc = new blue16_t;
@@ -22,7 +22,7 @@ void Init() {
 	program_counter = new blue16_t;
 	instr_register = new blue16_t;
 	switch_register = new blue16_t;
-	alu = new alu_t();
+	alu = std::make_unique<alu_t>();
 	sys_reset();
 }
 
@@ -106,12 +106,6 @@ void sys_reset() {
 	instr_register->u16 = 0;
 	program_counter->u16 = 0;
 }
-/* reinterpretar datos de tipo int -> r_blue16_t */
-// structures::r_blue16_t ops::to_rb16t(int data) {
-// 	structures::r_blue16_t temp;
-// 	std::memcpy(&temp, &data, sizeof(structures::r_blue16_t));
-// 	return temp;
-// }
 
 void sequencer_t::togglestate() {
 	working = !stopped;
@@ -128,7 +122,7 @@ void OP_NOT() {
 
 void OP_SRJ(const uint16_t memaddr) {
 	acc->raw_register = program_counter->raw_register;
-	acc->raw_register.op_code = static_cast<opcodes>(0);
+	acc->raw_register.op_code = static_cast<opcode_t>(0);
 	at(memaddr).u16 = program_counter->u16;
 }
 

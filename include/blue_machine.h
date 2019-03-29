@@ -5,8 +5,9 @@
 #include "blue_state.h"
 #include <array>
 #include <cstdint>
+#include <memory>
 
-	static std::array<blue16_t, memory_size> memory_array;
+	[[maybe_unused]] static std::array<blue16_t, memory_size> memory_array;
 	extern blue16_t* instr_register;
 	extern blue16_t* mbr;
 	extern blue16_t* mar;
@@ -14,7 +15,7 @@
 	extern blue16_t* acc;
 	extern blue16_t* switch_register;
 	extern sequencer_t* sequencer;
-	extern alu_t* alu;
+	extern std::unique_ptr<alu_t> alu;
 	/*
 	*/
 	void reset_memory();

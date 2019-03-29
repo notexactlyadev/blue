@@ -4,8 +4,8 @@
 /* The memory size for the emulated machine */
 constexpr unsigned memory_size = 4096;
 
-/* OPCODES */
-typedef enum opcodes : uint16_t {
+/* opcode_t */
+enum opcode_t : uint16_t {
 	HLT = 0b0000,
 	ADD = 0b0001,
 	XOR = 0b0010,
@@ -22,24 +22,25 @@ typedef enum opcodes : uint16_t {
 	RAL = 0b1101,
 	CSA = 0b1110,
 	NOP = 0b1111
-} opcodes_t;
+};
 
 struct alignas(sizeof(uint16_t)) register_blue {
 	/* 16 bits structure */
 	uint16_t data : 12; // memory address
-	opcodes_t op_code : 4;   // operation code
+	opcode_t op_code : 4;   // operation code
 };
 
 /* The register as a Union for ease of use. */
 union blue16_t {
 	register_blue raw_register; // register structure
-	int16_t i16;         // interpreted value as int
+	int16_t i16; // interpreted value as int
 	uint16_t u16;
 };
 
 struct alu_t {
 	blue16_t *z, *y;
 	alu_t();
+	~alu_t();
 	void alu_reset();
 	void exec_cycle();
 	void ADD();
