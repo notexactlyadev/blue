@@ -3,7 +3,9 @@ SOURCE = ${wildcard *.cpp}
 OBJS =	${SOURCE: .cpp = .o}
 WARNS = -Wall -Wextra -Wshadow -Warray-bounds -pedantic
 
-CXX_FLAGS = -std=c++17 ${WARNS} -g
+LINK = -lasan
+
+CXX_FLAGS = -std=c++17 ${WARNS} -g -fsanitize=address
 
 ifeq ($(OS),Windows_NT)
 	DETECTED_OS = $(OS)
@@ -19,11 +21,11 @@ CXX = g++
 all: ${PROGRAM}
 
 ${PROGRAM}: ${OBJS}
-	${CXX} ${CXX_FLAGS} -o "$@" ${OBJS}
+	${CXX} ${CXX_FLAGS} -o "$@" ${OBJS} -lasan
 
 clean:
 ifeq ($(DETECTED_OS), Linux)
-	rm -r ${RM} OBJS ${PROGRAM} | true
+	${RM} OBJS ${PROGRAM} | true
 endif
 ifeq ($(DETECTED_OS), Windows_NT)
 	del OBJS ${PROGRAM}

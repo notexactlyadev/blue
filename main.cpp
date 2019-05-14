@@ -19,15 +19,24 @@ int main() {
 	write2memaddr({0002, ADD}, 3U);
 	write2memaddr({0010, STA}, 4U);
 	write2memaddr({0011, RAL}, 5U);
-	write2memaddr({0000, SRJ}, 6U);
+	write2memaddr({0034, NOP}, 6U);
+	write2memaddr({0010, LDA}, 7U);
+	write2memaddr({0006, ADD}, 8U);
+	write2memaddr({11, STA}, 9U);
+	//write2memaddr({0000, SRJ}, 6U);
 	write2memaddr({0000, JMP}, 10U);
 	//write2register(packet2, blue_hw.switch_register);
 
 	//blue_hw.deposit();
 	//blue_hw.interpret_data(packet1, 1);
+	#ifdef __linux__
+		system("clear");
+	#else
+		system("cls");
+	#endif
 
 	while(true) {
-		system("cls");
+		
 		if(getchar() == 'q') {
 			break;
 		}
