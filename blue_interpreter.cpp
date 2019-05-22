@@ -5,7 +5,7 @@
 #include <iostream>
 #include <iomanip>
 
-void sys_interpreter(uint16_t max_addr) {
+void blue_machine::sys_interpreter(uint16_t max_addr) {
 	for (size_t i = 0; i < max_addr; ++i) {
 		std::cout << "Memory Position [" << std::oct << std::setfill('0') << std::setw(4) << i << std::dec << "] -> ";
 		switch (get_opcode(i)) {

@@ -35,10 +35,12 @@ union blue16_t {
 	register_blue raw_register; // register structure
 	int16_t i16; // interpreted value as int
 	uint16_t u16;
+	blue16_t() : u16(0) {};
 };
 
 struct alu_t {
 	blue16_t *z, *y;
+	void* machine_ptr;
 	alu_t();
 	~alu_t();
 	void alu_reset();

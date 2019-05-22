@@ -5,3 +5,4 @@ namespace blue {
     //void sys_interpreter(machine&, uint16_t);
     
 } // blue
+

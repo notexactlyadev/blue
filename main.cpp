@@ -12,20 +12,21 @@ int main() {
 	// uint16_t data = 0b0001000000000000;
 	//uint16_t packet1 = 0x7001;
 	//uint16_t packet2 = 0x1020;
+	blue_hw = std::make_unique<blue_machine>();
 	uint16_t constraint = 15;
-	Init();
-	write2memaddr({0004, HLT}, 0U);
-	write2memaddr({0000, LDA}, 1U);
-	write2memaddr({0003, HLT}, 2U);
-	write2memaddr({0002, ADD}, 3U);
-	write2memaddr({0010, STA}, 4U);
-	write2memaddr({0011, RAL}, 5U);
-	write2memaddr({0034, NOP}, 6U);
-	write2memaddr({0010, LDA}, 7U);
-	write2memaddr({0006, ADD}, 8U);
-	write2memaddr({11, STA}, 9U);
+	//blue_hw->Init();
+	blue_hw->write2memaddr({0004, HLT}, 0U);
+	blue_hw->write2memaddr({0000, LDA}, 1U);
+	blue_hw->write2memaddr({0003, HLT}, 2U);
+	blue_hw->write2memaddr({0002, ADD}, 3U);
+	blue_hw->write2memaddr({0010, STA}, 4U);
+	blue_hw->write2memaddr({0011, RAL}, 5U);
+	blue_hw->write2memaddr({0034, NOP}, 6U);
+	blue_hw->write2memaddr({0010, LDA}, 7U);
+	blue_hw->write2memaddr({0006, ADD}, 8U);
+	blue_hw->write2memaddr({11, STA}, 9U);
 	//write2memaddr({0000, SRJ}, 6U);
-	write2memaddr({0000, JMP}, 10U);
+	blue_hw->write2memaddr({0000, JMP}, 10U);
 	//write2register(packet2, blue_hw.switch_register);
 
 	//blue_hw.deposit();
@@ -41,18 +42,17 @@ int main() {
 		if(getchar() == 'q') {
 			break;
 		}
-		sys_interpreter(constraint);
+		blue_hw->sys_interpreter(constraint);
 
 		std::cout << "\n";
 		for (size_t i = 0; i < constraint; ++i) {
 			std::cout << "Memory Position [" << std::setw(4) << std::oct << i << "]: ";
-			print_bits(at(i).u16);
+			print_bits(blue_hw->get_memaddr(i));
 		}
 		std::cout << std::dec << std::setfill(' ');
 
 		std::cout << "Blue Accumulator    " << std::setw(4) << " : ";
-		print_bits(acc->i16);
-
+		print_bits(blue_hw->access_acc().u16);
 	}
 
 	return 0;

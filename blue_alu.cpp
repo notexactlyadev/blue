@@ -15,30 +15,30 @@ alu_t::~alu_t() {
 }
 
 void alu_t::exec_cycle() {
-	z->raw_register = acc->raw_register;
-	y->raw_register = mbr->raw_register;
+	z->raw_register = reinterpret_cast<blue_machine*>(machine_ptr)->acc->raw_register;
+	y->raw_register = reinterpret_cast<blue_machine*>(machine_ptr)->mbr->raw_register;
 }
 
 void alu_t::ADD() {
 	exec_cycle();
 	int16_t result = z->raw_register.data + y->raw_register.data;
 	if (result > 216 || result < -215) {
-		sequencer->togglestate();
+		reinterpret_cast<blue_machine*>(machine_ptr)->sequencer->togglestate();
 		return;
 	}
-	acc->i16 = result;
+	reinterpret_cast<blue_machine*>(machine_ptr)->acc->i16 = result;
 }
 
 void alu_t::XOR() {
-	acc->u16 = z->u16 ^ y->u16;
+	reinterpret_cast<blue_machine*>(machine_ptr)->acc->u16 = z->u16 ^ y->u16;
 }
 
 void alu_t::AND() {
-	acc->u16 = z->u16 & y->u16;
+	reinterpret_cast<blue_machine*>(machine_ptr)->acc->u16 = z->u16 & y->u16;
 }
 
 void alu_t::IOR() {
-	acc->u16 = z->u16 | y->u16;
+	reinterpret_cast<blue_machine*>(machine_ptr)->acc->u16 = z->u16 | y->u16;
 }
 
 void alu_t::alu_reset() {
