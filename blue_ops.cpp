@@ -157,3 +157,6 @@ blue_machine::~blue_machine() {
 blue16_t blue_machine::access_acc() {
 	return *acc;
 }
+
+
+register_blue instruction_cast(opcode_t mnemonic, uint16_t operand) { return {operand, mnemonic}; }

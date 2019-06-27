@@ -41,3 +41,5 @@ inline void print_bits(T&& variable) {
 //   }
 //   printf(" -> %d in decimal\n", orig);
 // }
+
+register_blue instruction_cast(opcode_t, uint16_t);
