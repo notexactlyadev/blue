@@ -5,6 +5,12 @@
 
 // #define PRINT_BITS_EXTRA 1
 
+
+template <typename T>
+auto twos_complement(T val) {
+    return static_cast<std::make_signed_t<std::decay_t<T>>>(val);
+}
+
 template <class T, const uint64_t type_size = (sizeof(std::decay_t<T>) * 8), class = std::enable_if_t<std::is_floating_point_v<std::decay_t<T>> ||
 std::is_integral_v<std::decay_t<T>>>>
 inline void print_bits(T&& variable) {
@@ -27,7 +33,7 @@ inline void print_bits(T&& variable) {
 			std::cout << " ";
 		}
 	}
-	std::cout << "-> " << variable << " in decimal\n";
+	std::cout << "-> " << twos_complement(variable) << " in decimal\n";
 }
 
 
