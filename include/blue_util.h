@@ -3,20 +3,10 @@
 #include <type_traits>
 #include <cstdint>
 
-// #define PRINT_BITS_EXTRA 1
-
-
-template <typename T>
-auto twos_complement(T val) {
-    return static_cast<std::make_signed_t<std::decay_t<T>>>(val);
-}
-
 template <class T, const uint64_t type_size = (sizeof(std::decay_t<T>) * 8), class = std::enable_if_t<std::is_floating_point_v<std::decay_t<T>> ||
 std::is_integral_v<std::decay_t<T>>>>
 inline void print_bits(T&& variable) {
-	#ifdef PRINT_BITS_EXTRA
-	std::printf("Ejecutando funcion (%s): \n", __PRETTY_FUNCTION__);
-	#endif
+
 	/*
 	Nuestra mascara consiste en una variable de 64 bits, que contiene un solo bit activado correspondiente
 	al tamaño de T en bits, mientras mascara no sea 0, continuamos, al finalizar, movemos el bit de la variable
@@ -33,19 +23,10 @@ inline void print_bits(T&& variable) {
 			std::cout << " ";
 		}
 	}
-	std::cout << "-> " << twos_complement(variable) << " in decimal\n";
+
+	/* Ugly hack, I know */
+	auto casted = *reinterpret_cast<std::make_signed_t<std::remove_reference_t<T>>*>(&variable);
+
+	std::cout << "-> " << casted << " (decimal)\n";
 }
 
-
-// template <typename T>
-// void print_bits(T x) {
-//   T orig = x;
-//   size_t wl = sizeof(T) * 8 - 1;
-//   unsigned mask;
-//   for (mask = 1 << wl; mask; mask >>= 1) {
-//     printf("%c", (x & mask ? '1' : '0'));
-//   }
-//   printf(" -> %d in decimal\n", orig);
-// }
-
-register_blue instruction_cast(opcode_t, uint16_t);

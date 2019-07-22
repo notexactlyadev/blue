@@ -14,14 +14,15 @@ private:
 	std::unique_ptr<blue16_t> instr_register;
 	std::unique_ptr<blue16_t> mbr;
 	std::unique_ptr<blue16_t> mar;
-	std::unique_ptr<blue16_t> program_counter;
 	std::unique_ptr<blue16_t> acc;
 	std::unique_ptr<blue16_t> switch_register;
 	std::unique_ptr<sequencer_t> sequencer;
 	std::unique_ptr<alu_t> alu;
 public:
 	/*
+	
 	*/
+	std::unique_ptr<blue16_t> program_counter;
 	void reset_memory();
 	/* methods */
 

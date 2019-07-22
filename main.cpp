@@ -35,6 +35,8 @@ int main(int argc, char **argv) {
 
 		std::cout << "Blue Accumulator    " << std::setw(4) << " : ";
 		print_bits(blue_hw->access_acc().u16);
+		auto pc = blue_hw->program_counter.get()->u16;
+		std::cout << "Program Counter: " << std::oct << pc << std::dec << " (DECIMAL: " << pc << ")\n";
 	}
 
 	return 0;

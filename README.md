@@ -1,6 +1,6 @@
 ﻿# 'Blue'
 
-![](http://www1.frm.utn.edu.ar/itren/logo-blue.gif "Logo")
+A (incomplete) interpreter, based on the theorethical Blue computer, as given in the UTN FRM Computer Architecture course.
 
 Written based on the sources/documentation provided by the following [Universidad Tecnologica Nacional -- Facultad Regional Mendoza](frm.utn.edu.ar) alumni:
 ____
@@ -26,5 +26,5 @@ Now, a simulator rewritten in Borland Delphi is the one currently being used in 
 
 ### So, what is the point of all this?
 
-It is simply a personal proyect, because I wanted to do it as a challenge, this is simply a interpreter based on the lectures given and theory described in the "Computer Architecture" course, in the C++ programming language, to teach myself some fundamentals of writting virtual machines and stuff.
+It is simply a personal proyect, because I wanted to do it as a challenge, this is simply a interpreter based on the lectures given and theory described in the "Computer Architecture" course, in the C++ programming language, to teach myself some fundamentals of writting virtual machines / interpreters and stuff.
 
